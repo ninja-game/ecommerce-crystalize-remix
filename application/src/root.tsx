@@ -62,7 +62,7 @@ export let loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) => {
         language: requestContext.language,
     });
     const [navigation, tenantConfig, translations, footer] = await Promise.all([
-        api.fetchNavigation('/').catch(() => ({ tree: [] })),
+        api.fetchNavigation('/').catch(() => null),
         api.fetchTenantConfig(secret.config.tenantIdentifier).catch(() => ({
             currency: { code: 'EUR', symbol: '€' },
             logo: null,
@@ -93,7 +93,7 @@ export let loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) => {
             headers: {
                 ...StoreFrontAwaretHttpCacheHeaderTagger('30s', '30s', ['shop'], shared.config.tenantIdentifier)
                     .headers,
-                'X-SuperFast-Theme': shared.config.theme,
+                'X-SuperFast-Theme': shared.config.theme || 'default',
             },
         },
     );

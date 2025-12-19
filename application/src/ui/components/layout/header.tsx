@@ -17,8 +17,10 @@ export const Header: React.FC<{
     navigation: {
         folders: Tree[];
         topics: Tree[];
-    };
+    } | null;
 }> = ({ navigation }) => {
+    const folders = navigation?.folders ?? [];
+    const topics = navigation?.topics ?? [];
     const { state: appContextState, dispatch: appContextDispatch, path } = useAppContext();
     let checkoutFlow = ['/cart', '/checkout', '/confirmation'];
     let [isOpen, setIsOpen] = useState(false);
@@ -123,7 +125,7 @@ export const Header: React.FC<{
                                         } top-10 mt-5 bg-[#fff] w-full right-0 left-0 z-50 h-screen fixed left-0 bottom-0 px-10 py-10`}
                                     >
                                         <SearchBar />
-                                        {navigation.folders
+                                        {folders
                                             .filter((item) => {
                                                 return (
                                                     item.type === 'folder' &&
@@ -143,7 +145,7 @@ export const Header: React.FC<{
                                                     </Link>
                                                 );
                                             })}
-                                        <TopicNavigation navigation={navigation.topics} />
+                                        <TopicNavigation navigation={topics} />
                                     </div>
                                 </div>
                             </div>
