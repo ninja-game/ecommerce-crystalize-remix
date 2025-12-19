@@ -62,9 +62,12 @@ export let loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) => {
         language: requestContext.language,
     });
     const [navigation, tenantConfig, translations, footer] = await Promise.all([
-        api.fetchNavigation('/'),
-        api.fetchTenantConfig(secret.config.tenantIdentifier),
-        fetchTranslations(storage, memoryStorage, requestContext.language),
+        api.fetchNavigation('/').catch(() => ({ tree: [] })),
+        api.fetchTenantConfig(secret.config.tenantIdentifier).catch(() => ({
+            currency: { code: 'EUR', symbol: '€' },
+            logo: null,
+        })),
+        fetchTranslations(storage, memoryStorage, requestContext.language).catch(() => ({})),
         api.fetchFooter('/footer').catch(() => null),
     ]);
 

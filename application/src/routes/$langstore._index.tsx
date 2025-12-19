@@ -41,14 +41,19 @@ export const loader: LoaderFunction = async ({ request, params }: LoaderFunction
     const requestContext = getContext(request);
     const path = `/index`;
     const { shared } = await getStoreFront(requestContext.host);
-    const user = await authenticatedUser(request);
+    const user = await authenticatedUser(request).catch(() => null);
     const data = await dataFetcherForShapePage(
         'landing-page',
         path,
         requestContext,
         params,
         marketIdentifiersForUser(user),
-    );
+    ).catch(() => ({
+        name: 'Welcome',
+        path: '/index',
+        seo: {},
+        grids: [],
+    }));
 
     return json({ data }, StoreFrontAwaretHttpCacheHeaderTagger('15s', '1w', [path], shared.config.tenantIdentifier));
 };
