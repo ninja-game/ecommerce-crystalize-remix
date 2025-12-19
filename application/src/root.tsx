@@ -65,7 +65,7 @@ export let loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) => {
         api.fetchNavigation('/'),
         api.fetchTenantConfig(secret.config.tenantIdentifier),
         fetchTranslations(storage, memoryStorage, requestContext.language),
-        api.fetchFooter('/footer'),
+        api.fetchFooter('/footer').catch(() => null),
     ]);
 
     const apiPath = buildLanguageMarketAwareLink('/api', requestContext.language, requestContext.market);
