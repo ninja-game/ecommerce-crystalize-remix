@@ -93,7 +93,6 @@ export let loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) => {
             headers: {
                 ...StoreFrontAwaretHttpCacheHeaderTagger('30s', '30s', ['shop'], shared.config.tenantIdentifier)
                     .headers,
-                'X-SuperFast-Theme': shared.config.theme || 'default',
             },
         },
     );
