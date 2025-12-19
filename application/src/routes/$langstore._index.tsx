@@ -39,7 +39,7 @@ export const links: LinksFunction = () => {
 
 export const loader: LoaderFunction = async ({ request, params }: LoaderFunctionArgs) => {
     const requestContext = getContext(request);
-    const path = `/frontpage`;
+    const path = `/index`;
     const { shared } = await getStoreFront(requestContext.host);
     const user = await authenticatedUser(request);
     const data = await dataFetcherForShapePage(
