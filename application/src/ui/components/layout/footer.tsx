@@ -6,9 +6,29 @@ import { useAppContext } from '../../app-context/provider';
 import { Footer as FooterType } from '~/use-cases/contracts/Footer';
 
 export const Footer: React.FC<{
-    footer: FooterType;
+    footer: FooterType | null;
 }> = ({ footer }) => {
     const { state: appContextState } = useAppContext();
+
+    if (!footer) {
+        return (
+            <footer className="2xl w-full mx-auto">
+                <div className="mt-60 px-6">
+                    <div className="mx-auto flex items-center mt-20 mb-5 border-t border-grey pt-3 justify-between items-center">
+                        <div className="flex items-center">
+                            <img src={`${CrystallizeLogo}`} alt="Crystallize logo" width="38" height="31" />
+                            <p>
+                                Powered by{' '}
+                                <a href="https://crystallize.com" className="underline">
+                                    Crystallize
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
+    }
 
     return (
         <footer className="2xl w-full mx-auto">
